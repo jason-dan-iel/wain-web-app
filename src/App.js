@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import DamMap from "./DamMap";
-import { readExcelFile } from "./utils";
+import { readExcelFile } from "./utils/excel";
+import DamMap from "./components/DamMap";
 
 function App() {
   const [dams, setDams] = useState([]);
@@ -13,7 +13,7 @@ function App() {
     });
   }, []);
 
-  if (loading) return <div style={{padding:"2rem"}}>Loading dams...</div>;
+  if (loading) return <div className="loading">Loading dams...</div>;
 
   return (
     <div style={{height: "100vh", width: "100vw"}}>

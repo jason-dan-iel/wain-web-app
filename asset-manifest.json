@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/wain-web-app/static/css/main.43ca53b7.css",
+    "main.js": "/wain-web-app/static/js/main.2928c952.js",
+    "index.html": "/wain-web-app/index.html",
+    "main.43ca53b7.css.map": "/wain-web-app/static/css/main.43ca53b7.css.map",
+    "main.2928c952.js.map": "/wain-web-app/static/js/main.2928c952.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.43ca53b7.css",
+    "static/js/main.2928c952.js"
+  ]
+}

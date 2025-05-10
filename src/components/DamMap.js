@@ -41,7 +41,7 @@ function DamMap({ dams }) {
     setSelectedDam(dam);
     setGeoJsonData(null); // Clear previous polygon immediately for better UX
     try {
-      const resp = await fetch(`/shapefiles/${dam["Station id"]}.geojson`);
+      const resp = await fetch(process.env.PUBLIC_URL + `/shapefiles/${dam["Station id"]}.geojson`);
       if (resp.ok) {
         const json = await resp.json();
         setGeoJsonData(json.geojson ? json.geojson : json);

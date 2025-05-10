@@ -1,0 +1,28 @@
+body, html, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+  }
+  
+  .dam-details {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    background: #fff;
+    border-radius: 12px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.2);
+    padding: 2rem;
+    z-index: 10000;
+    min-width: 320px;
+  }
+  
+  .close-btn {
+    float: right;
+    font-size: 1.2em;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }

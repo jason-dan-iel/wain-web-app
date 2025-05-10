@@ -1,8 +1,8 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import L from "leaflet";
 import DamDetailsPanel from "./DamDetailsPanel";
-import { GeoJSON } from "react-leaflet";
+import ZoomToGeoJson from "./ZoomToGeoJson";
 import "leaflet/dist/leaflet.css";
 
 // Small circular marker icon
@@ -17,15 +17,11 @@ function DamMap({ dams }) {
   const [geoJsonData, setGeoJsonData] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedBasin, setSelectedBasin] = useState("All");
-  const mapRef = useRef(null);
-  const geoJsonLayerRef = useRef(null);
 
-  // Unique river basins
   const basins = [
     "All",
     ...Array.from(new Set(dams.map((d) => d["River basin name"])).values()),
   ];
-
   // Filtered dams
   const filteredDams = dams.filter((dam) => {
     const matchesName = dam["Station name"]
@@ -40,31 +36,24 @@ function DamMap({ dams }) {
   const handleDamSelect = async (dam) => {
     setSelectedDam(dam);
     setGeoJsonData(null); // Clear previous polygon immediately for better UX
+    
+    if (!dam["Station id"]) return;
+    
     try {
       const resp = await fetch(`https://saran-sir.s3.ap-south-1.amazonaws.com/shapefiles/${dam["Station id"]}.geojson`);
       if (resp.ok) {
         const json = await resp.json();
-        setGeoJsonData(json.geojson ? json.geojson : json);
+        const geoData = json.geojson ? json.geojson : json;
+        setGeoJsonData(geoData);
       } else {
+        console.error("Failed to fetch GeoJSON data");
         setGeoJsonData(null);
       }
-    } catch {
+    } catch (error) {
+      console.error("Error fetching GeoJSON:", error);
       setGeoJsonData(null);
     }
   };
-
-  // Zoom to polygon after it appears
-  useEffect(() => {
-    if (
-      geoJsonData &&
-      mapRef.current &&
-      geoJsonLayerRef.current &&
-      geoJsonLayerRef.current.getBounds &&
-      geoJsonLayerRef.current.getBounds().isValid()
-    ) {
-      mapRef.current.fitBounds(geoJsonLayerRef.current.getBounds());
-    }
-  }, [geoJsonData]);
 
   return (
     <div className="app-layout">
@@ -97,9 +86,6 @@ function DamMap({ dams }) {
             center={[22.5, 78.9]}
             zoom={5}
             style={{ height: "100%", width: "100%" }}
-            whenCreated={(mapInstance) => {
-              mapRef.current = mapInstance;
-            }}
           >
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -120,13 +106,7 @@ function DamMap({ dams }) {
                 />
               );
             })}
-            {geoJsonData && (
-              <GeoJSON
-                data={geoJsonData}
-                style={{ color: "#2196f3", weight: 3, fillOpacity: 0.2 }}
-                ref={geoJsonLayerRef}
-              />
-            )}
+            {geoJsonData && <ZoomToGeoJson geoJsonData={geoJsonData} />}
           </MapContainer>
         </div>
         <DamDetailsPanel

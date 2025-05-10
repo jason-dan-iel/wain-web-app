@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/wain-web-app/static/css/main.43ca53b7.css",
-    "main.js": "/wain-web-app/static/js/main.c54afc34.js",
+    "main.js": "/wain-web-app/static/js/main.45f2b185.js",
     "index.html": "/wain-web-app/index.html",
     "main.43ca53b7.css.map": "/wain-web-app/static/css/main.43ca53b7.css.map",
-    "main.c54afc34.js.map": "/wain-web-app/static/js/main.c54afc34.js.map"
+    "main.45f2b185.js.map": "/wain-web-app/static/js/main.45f2b185.js.map"
   },
   "entrypoints": [
     "static/css/main.43ca53b7.css",
-    "static/js/main.c54afc34.js"
+    "static/js/main.45f2b185.js"
   ]
 }

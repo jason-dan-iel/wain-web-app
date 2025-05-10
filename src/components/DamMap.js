@@ -41,7 +41,7 @@ function DamMap({ dams }) {
     setSelectedDam(dam);
     setGeoJsonData(null); // Clear previous polygon immediately for better UX
     try {
-      const resp = await fetch(process.env.PUBLIC_URL + `/shapefiles/${dam["Station id"]}.geojson`);
+      const resp = await fetch(`https://saran-sir.s3.ap-south-1.amazonaws.com/shapefiles/${dam["Station id"]}.geojson`);
       if (resp.ok) {
         const json = await resp.json();
         setGeoJsonData(json.geojson ? json.geojson : json);
@@ -62,9 +62,7 @@ function DamMap({ dams }) {
       geoJsonLayerRef.current.getBounds &&
       geoJsonLayerRef.current.getBounds().isValid()
     ) {
-      mapRef.current.fitBounds(geoJsonLayerRef.current.getBounds(), {
-        maxZoom: 16,
-      });
+      mapRef.current.fitBounds(geoJsonLayerRef.current.getBounds());
     }
   }, [geoJsonData]);
 

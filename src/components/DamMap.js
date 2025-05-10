@@ -71,7 +71,7 @@ function DamMap({ dams }) {
   return (
     <div className="app-layout">
       <header className="header">
-        <span className="header-title">Dam Explorer</span>
+        <span className="header-title">Wain Data Set</span>
       </header>
       <div className="toolbar">
         <input
